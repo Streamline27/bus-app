@@ -123,8 +123,8 @@ public class DraftPriceTest extends IntegrationTest {
 
         assertTerminalNameIsAsExpected(draftPriceResponse);
         assertPriceListSizeIs(2, draftPriceResponse);
-        assertPricesForPassengerAre(args.tickerPrice1, args.luggagePrice2, args.passenger1.getName(), draftPriceResponse);
-        assertPricesForPassengerAre(args.tickerPrice3, args.luggagePrice4, args.passenger2.getName(), draftPriceResponse);
+        assertPricesForPassengerAre(args.tickerPrice1, args.luggagePrice1, args.passenger1.getName(), draftPriceResponse);
+        assertPricesForPassengerAre(args.tickerPrice2, args.luggagePrice2, args.passenger2.getName(), draftPriceResponse);
         assertTotalPriceEqualsTo(args.totalPrice, draftPriceResponse);
     }
 
@@ -133,64 +133,64 @@ public class DraftPriceTest extends IntegrationTest {
                 TwoPassengerArguments.builder() // TWo ADULTS, NO TAX, NO LUGGAGE
                         .taxRate(0).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(10).tickerPrice3(10)
-                        .luggagePrice2(0).luggagePrice4(0)
+                        .tickerPrice1(10).tickerPrice2(10)
+                        .luggagePrice1(0).luggagePrice2(0)
                         .totalPrice(20)
                         .build(),
                 TwoPassengerArguments.builder() // TWo ADULTS, WITH TAX, NO LUGGAGE
                         .taxRate(10).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(11).tickerPrice3(11)
-                        .luggagePrice2(0).luggagePrice4(0)
+                        .tickerPrice1(11).tickerPrice2(11)
+                        .luggagePrice1(0).luggagePrice2(0)
                         .totalPrice(22)
                         .build(),
                 TwoPassengerArguments.builder() // TWO ADULTS, NO TAX, 1st WITH 1 luggage
                         .taxRate(0).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1, 1)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(10).tickerPrice3(10)
-                        .luggagePrice2(3).luggagePrice4(0)
+                        .tickerPrice1(10).tickerPrice2(10)
+                        .luggagePrice1(3).luggagePrice2(0)
                         .totalPrice(23)
                         .build(),
                 TwoPassengerArguments.builder() // TWO ADULTS, WITH TAX, 1st WITH 1 luggage
                         .taxRate(10).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1, 1)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(11).tickerPrice3(11)
-                        .luggagePrice2(3.3).luggagePrice4(0)
+                        .tickerPrice1(11).tickerPrice2(11)
+                        .luggagePrice1(3.3).luggagePrice2(0)
                         .totalPrice(25.3)
                         .build(),
                 TwoPassengerArguments.builder() // TWO ADULTS, NO TAX, 1st WITH 2 luggage
                         .taxRate(0).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1, 2)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(10).tickerPrice3(10)
-                        .luggagePrice2(6).luggagePrice4(0)
+                        .tickerPrice1(10).tickerPrice2(10)
+                        .luggagePrice1(6).luggagePrice2(0)
                         .totalPrice(26)
                         .build(),
                 TwoPassengerArguments.builder() // TWO ADULTS, WITH TAX, 1st WITH 2 luggage
                         .taxRate(10).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1, 2)).passenger2(getAdultPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(11).tickerPrice3(11)
-                        .luggagePrice2(6.6).luggagePrice4(0)
+                        .tickerPrice1(11).tickerPrice2(11)
+                        .luggagePrice1(6.6).luggagePrice2(0)
                         .totalPrice(28.6)
                         .build(),
                 TwoPassengerArguments.builder() // ADULT AND CHILD, NO TAX, NO LUGGAGE
                         .taxRate(0).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1)).passenger2(getChildPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(10).tickerPrice3(5)
-                        .luggagePrice2(0).luggagePrice4(0)
+                        .tickerPrice1(10).tickerPrice2(5)
+                        .luggagePrice1(0).luggagePrice2(0)
                         .totalPrice(15)
                         .build(),
                 TwoPassengerArguments.builder() // ADULT AND CHILD, WITH TAX, NO LUGGAGE
                         .taxRate(10).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1)).passenger2(getChildPassenger(EXPECTED_PASSENGER_NAME_2))
-                        .tickerPrice1(11).tickerPrice3(5.5)
-                        .luggagePrice2(0).luggagePrice4(0)
+                        .tickerPrice1(11).tickerPrice2(5.5)
+                        .luggagePrice1(0).luggagePrice2(0)
                         .totalPrice(16.5)
                         .build(),
                 TwoPassengerArguments.builder() // ADULT AND CHILD, WITH TAX, CHILD WITH LUGGAGE
                         .taxRate(10).basePrice(10)
                         .passenger1(getAdultPassenger(EXPECTED_PASSENGER_NAME_1)).passenger2(getChildPassenger(EXPECTED_PASSENGER_NAME_2, 1))
-                        .tickerPrice1(11).tickerPrice3(5.5)
-                        .luggagePrice2(0).luggagePrice4(3.3)
+                        .tickerPrice1(11).tickerPrice2(5.5)
+                        .luggagePrice1(0).luggagePrice2(3.3)
                         .totalPrice(19.8)
                         .build()
         );
@@ -203,9 +203,9 @@ public class DraftPriceTest extends IntegrationTest {
         double basePrice;
         double taxRate;
         double tickerPrice1;
+        double luggagePrice1;
+        double tickerPrice2;
         double luggagePrice2;
-        double tickerPrice3;
-        double luggagePrice4;
         double totalPrice;
 
         @Override
