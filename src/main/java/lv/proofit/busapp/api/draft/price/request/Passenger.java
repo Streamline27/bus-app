@@ -18,7 +18,7 @@ public class Passenger {
 
     @Schema(example = "2")
     @PositiveOrZero
-    BigDecimal numberOfBags;
+    int numberOfBags;
 
     @NotNull
     PassengerAge age;

@@ -1,9 +1,8 @@
-package lv.proofit.busapp.feature;
+package lv.proofit.busapp.feature.exceptions;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lv.proofit.busapp.api.exceptions.ExceptionResponse;
-import lv.proofit.busapp.shared.NotValidExceptionMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

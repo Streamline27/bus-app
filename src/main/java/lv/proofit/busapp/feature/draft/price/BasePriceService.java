@@ -1,7 +1,6 @@
 package lv.proofit.busapp.feature.draft.price;
 
 import lombok.RequiredArgsConstructor;
-import lv.proofit.busapp.domain.BusTerminalRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -10,10 +9,10 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class BasePriceService {
 
-    private final BusTerminalRepository repository;
+    private final BasePriceRepository repository;
 
     public BigDecimal getBy(String busTerminalName) {
-        return repository.findByName(busTerminalName)
+        return repository.findByTerminalName(busTerminalName)
                 .orElseThrow(() -> new IllegalArgumentException("Could not find bus terminal with name:["+ busTerminalName +"]"))
                 .getPrice();
     }

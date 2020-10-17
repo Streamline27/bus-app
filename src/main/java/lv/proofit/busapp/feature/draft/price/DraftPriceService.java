@@ -6,7 +6,7 @@ import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
 import lv.proofit.busapp.api.draft.price.request.Passenger;
 import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
 import lv.proofit.busapp.api.draft.price.response.PassengerPrice;
-import lv.proofit.busapp.shared.TaxRatesApiClient;
+import lv.proofit.busapp.feature.tax.rates.TaxRatesApiClient;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,20 +44,20 @@ public class DraftPriceService {
         List<PassengerPrice> passengerPriceList = new ArrayList<>();
         for (Passenger passenger : request.getPassengers()) {
             BigDecimal tickerPrice = calculator.computePrice(passenger.getAge().getDiscountPercent(), taxRatePercent);
-            BigDecimal luggagePrice = calculator.computePrice(LUGGAGE_DISCOUNT_PERCENT, taxRatePercent).multiply(passenger.getNumberOfBags());
+            BigDecimal luggagePrice = calculator.computePrice(LUGGAGE_DISCOUNT_PERCENT, taxRatePercent).multiply(new BigDecimal(passenger.getNumberOfBags()));
             PassengerPrice passengerPrice = PassengerPrice.builder()
                     .passenger(passenger)
-                    .ticketPrice(tickerPrice)
-                    .luggagePrice(luggagePrice)
+                    .ticketPrice(tickerPrice.doubleValue())
+                    .luggagePrice(luggagePrice.doubleValue())
                     .build();
             passengerPriceList.add(passengerPrice);
         }
         return passengerPriceList;
     }
 
-    private BigDecimal getTotal(List<PassengerPrice> prices) {
+    private Double getTotal(List<PassengerPrice> prices) {
         return prices.stream()
                 .map(PassengerPrice::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(0D, Double::sum);
     }
 }

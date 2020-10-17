@@ -1,5 +1,6 @@
 package lv.proofit.busapp.api.draft.price.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Value;
 import lv.proofit.busapp.api.draft.price.request.Passenger;
@@ -11,10 +12,11 @@ import java.math.BigDecimal;
 public class PassengerPrice {
 
     Passenger passenger;
-    BigDecimal ticketPrice;
-    BigDecimal luggagePrice;
+    double ticketPrice;
+    double luggagePrice;
 
-    public BigDecimal getTotalPrice() {
-        return ticketPrice.add(luggagePrice);
+    @JsonIgnore
+    public Double getTotalPrice() {
+        return ticketPrice + luggagePrice;
     }
 }

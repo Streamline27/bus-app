@@ -1,0 +1,2 @@
+buss-app:
+  tax-rates-service-url: "http://localhost:8089"

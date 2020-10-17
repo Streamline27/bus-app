@@ -1,18 +1,18 @@
 package lv.proofit.busapp.api.draft.price.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Value
+@Data
 @Builder
 public class DraftPriceResponse {
 
-    @Schema(example = "Vilnus, Lithuania")
+    @Schema(example = "Vilnius, Lithuania")
     String destinationTerminalName;
     List<PassengerPrice> prices;
-    BigDecimal total;
+    double total;
 }

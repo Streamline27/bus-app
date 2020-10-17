@@ -1,4 +1,4 @@
-package lv.proofit.busapp.shared;
+package lv.proofit.busapp.feature.exceptions;
 
 import lv.proofit.busapp.api.exceptions.ErrorDto;
 import lv.proofit.busapp.api.exceptions.ExceptionResponse;

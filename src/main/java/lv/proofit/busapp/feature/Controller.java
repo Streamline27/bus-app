@@ -2,22 +2,16 @@ package lv.proofit.busapp.feature;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lv.proofit.busapp.api.exceptions.ExceptionResponse;
 import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
 import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
 import lv.proofit.busapp.api.tax.rates.TaxRatesResponse;
 import lv.proofit.busapp.feature.draft.price.DraftPriceService;
 import lv.proofit.busapp.feature.tax.rates.TaxRatesService;
-import lv.proofit.busapp.shared.NotValidExceptionMapper;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 @Slf4j
 @RestController

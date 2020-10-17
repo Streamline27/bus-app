@@ -3,7 +3,7 @@ package lv.proofit.busapp.api.exceptions;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import lv.proofit.busapp.shared.NotValidExceptionMapper;
+import lv.proofit.busapp.feature.exceptions.NotValidExceptionMapper;
 
 import java.util.Set;
 
