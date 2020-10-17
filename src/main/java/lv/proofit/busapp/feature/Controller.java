@@ -2,30 +2,40 @@ package lv.proofit.busapp.feature;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lv.proofit.busapp.api.ExceptionResponse;
-import lv.proofit.busapp.api.request.DraftPriceRequest;
-import lv.proofit.busapp.api.response.DraftPriceResponse;
-import lv.proofit.busapp.feature.ticker.price.TickerPriceService;
+import lv.proofit.busapp.api.exceptions.ExceptionResponse;
+import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
+import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
+import lv.proofit.busapp.api.tax.rates.TaxRatesResponse;
+import lv.proofit.busapp.feature.draft.price.DraftPriceService;
+import lv.proofit.busapp.feature.tax.rates.TaxRatesService;
+import lv.proofit.busapp.shared.NotValidExceptionMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Slf4j
 @RestController
-@RestControllerAdvice
 @RequiredArgsConstructor
 public class Controller {
 
-    private final TickerPriceService tickerPriceService;
+    private final DraftPriceService draftPriceService;
+    private final TaxRatesService taxRatesService;
 
-    @PostMapping("/price")
-    public DraftPriceResponse calculatePrice(@RequestBody DraftPriceRequest request) {
-        return tickerPriceService.calculatePrices(request);
+    @PostMapping("/draft-price")
+    public DraftPriceResponse calculateDraftPrice(@Valid @RequestBody DraftPriceRequest request) {
+        return draftPriceService.calculatePrices(request);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(Exception.class)
-    public ExceptionResponse handle(Exception ex) {
-        log.error("Error during request processing.", ex);
-        return new ExceptionResponse(ex.getMessage());
+    @GetMapping("/tax-rates")
+    public TaxRatesResponse getTaxRatesResponse(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate
+    ) {
+        return taxRatesService.getRatesAt(localDate);
     }
 }

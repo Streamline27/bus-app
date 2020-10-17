@@ -1,10 +1,11 @@
-package lv.proofit.busapp.api.request;
+package lv.proofit.busapp.api.draft.price.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Value
@@ -12,9 +13,13 @@ import java.math.BigDecimal;
 public class Passenger {
 
     @Schema(example = "Vladislav")
+    @NotNull
     String name;
 
     @Schema(example = "2")
+    @PositiveOrZero
     BigDecimal numberOfBags;
+
+    @NotNull
     PassengerAge age;
 }

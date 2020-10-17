@@ -1,4 +1,4 @@
-package lv.proofit.busapp.api.request;
+package lv.proofit.busapp.api.draft.price.request;
 
 import lombok.Getter;
 

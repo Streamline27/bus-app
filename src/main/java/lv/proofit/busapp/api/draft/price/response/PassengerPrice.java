@@ -1,9 +1,8 @@
-package lv.proofit.busapp.api.response;
+package lv.proofit.busapp.api.draft.price.response;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
-import lv.proofit.busapp.api.request.Passenger;
+import lv.proofit.busapp.api.draft.price.request.Passenger;
 
 import java.math.BigDecimal;
 

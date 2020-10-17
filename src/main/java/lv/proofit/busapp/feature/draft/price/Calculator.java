@@ -1,4 +1,4 @@
-package lv.proofit.busapp.feature.ticker.price;
+package lv.proofit.busapp.feature.draft.price;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

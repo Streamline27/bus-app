@@ -1,10 +1,7 @@
-package lv.proofit.busapp.api.response;
+package lv.proofit.busapp.api.draft.price.response;
 
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
 import java.math.BigDecimal;

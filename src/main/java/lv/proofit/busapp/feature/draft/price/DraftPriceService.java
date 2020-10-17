@@ -1,28 +1,34 @@
-package lv.proofit.busapp.feature.ticker.price;
+package lv.proofit.busapp.feature.draft.price;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lv.proofit.busapp.api.request.DraftPriceRequest;
-import lv.proofit.busapp.api.request.Passenger;
-import lv.proofit.busapp.api.response.DraftPriceResponse;
-import lv.proofit.busapp.api.response.PassengerPrice;
+import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
+import lv.proofit.busapp.api.draft.price.request.Passenger;
+import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
+import lv.proofit.busapp.api.draft.price.response.PassengerPrice;
+import lv.proofit.busapp.shared.TaxRatesApiClient;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TickerPriceService {
+public class DraftPriceService {
 
     private static final BigDecimal LUGGAGE_DISCOUNT_PERCENT = new BigDecimal(70);
 
     private final BasePriceService basePriceService;
-    private final TaxRateService taxRateService;
+    private final TaxRatesApiClient taxRatesApiClient;
 
     public DraftPriceResponse calculatePrices(DraftPriceRequest request) {
+        log.info("Draft price: Computing price. destinationTerminalName:[{}], numPassengers:[{}]",
+                request.getDestinationTerminalName(),
+                request.getPassengers().size()
+        );
         List<PassengerPrice> passengerPriceList = getPassengerPrices(request);
         return DraftPriceResponse.builder()
                 .destinationTerminalName(request.getDestinationTerminalName())
@@ -32,12 +38,8 @@ public class TickerPriceService {
     }
 
     private List<PassengerPrice> getPassengerPrices(DraftPriceRequest request) {
-        log.info("Requesting draft price. destinationTerminalName:[{}], numPassengers:[{}]",
-                request.getDestinationTerminalName(),
-                request.getPassengers().size()
-        );
         BigDecimal basePrice = basePriceService.getBy(request.getDestinationTerminalName());
-        BigDecimal taxRatePercent = taxRateService.get();
+        BigDecimal taxRatePercent = taxRatesApiClient.get(LocalDate.now()).getTaxRate();
         Calculator calculator = new Calculator(basePrice);
         List<PassengerPrice> passengerPriceList = new ArrayList<>();
         for (Passenger passenger : request.getPassengers()) {
