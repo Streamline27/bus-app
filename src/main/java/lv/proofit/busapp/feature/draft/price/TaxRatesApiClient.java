@@ -1,4 +1,4 @@
-package lv.proofit.busapp.feature.tax.rates;
+package lv.proofit.busapp.feature.draft.price;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

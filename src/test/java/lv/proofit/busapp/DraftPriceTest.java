@@ -285,8 +285,6 @@ public class DraftPriceTest extends IntegrationTest {
         assertEquals(i, draftPriceResponse.getPrices().size());
     }
 
-
-
     private TestApiResult<DraftPriceResponse> calculateDraftPriceFor(List<Passenger> passenger2) throws Exception {
         DraftPriceRequest request = DraftPriceRequest.builder()
                 .destinationTerminalName(EXPECTED_DESTINATION_TERMINAL)

@@ -6,7 +6,6 @@ import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
 import lv.proofit.busapp.api.draft.price.request.Passenger;
 import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
 import lv.proofit.busapp.api.draft.price.response.PassengerPrice;
-import lv.proofit.busapp.feature.tax.rates.TaxRatesApiClient;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
