@@ -1,4 +1,4 @@
-# Home task for Proof IT
+# Home task for an IT company
 
 #### How to run
 
