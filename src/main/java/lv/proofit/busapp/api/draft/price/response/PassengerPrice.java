@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Value;
 import lv.proofit.busapp.api.draft.price.request.Passenger;
 
-import java.math.BigDecimal;
-
 @Value
 @Builder
 public class PassengerPrice {

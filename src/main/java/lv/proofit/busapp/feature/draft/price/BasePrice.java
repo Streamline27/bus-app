@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.math.BigDecimal;
 
 @Data
 @Accessors(chain = true)
@@ -13,5 +12,5 @@ import java.math.BigDecimal;
 public class BasePrice {
     @Id
     private String terminalName;
-    private BigDecimal price;
+    private double price;
 }

@@ -5,17 +5,10 @@ import java.math.RoundingMode;
 
 public class Calculator {
 
-    private static final BigDecimal HUNDRED = new BigDecimal(100);
-
-    private final BigDecimal basePrice;
-
-    public Calculator(BigDecimal basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public BigDecimal computePrice(BigDecimal discountPercent, BigDecimal taxPercent) {
-        BigDecimal discountMultiplier = HUNDRED.add(discountPercent.negate()).divide(HUNDRED, 2, RoundingMode.HALF_UP);
-        BigDecimal taxMultiplier = taxPercent.add(HUNDRED).divide(HUNDRED, 2, RoundingMode.HALF_UP);
-        return this.basePrice.multiply(discountMultiplier).multiply(taxMultiplier);
+    public static double computePrice(double basePrice, double discountPercent, double taxPercent) {
+        double taxMultiplier = (taxPercent + 100) / 100;
+        double discountMultiplier = (100 - discountPercent) / 100;
+        double rawPrice = basePrice * taxMultiplier * discountMultiplier;
+        return BigDecimal.valueOf(rawPrice).setScale(2, RoundingMode.HALF_DOWN).doubleValue();
     }
 }

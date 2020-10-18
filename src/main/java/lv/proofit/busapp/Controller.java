@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Slf4j
@@ -32,7 +31,7 @@ public class Controller {
     ) {
         log.info("Tax rates: Requested rates at:[{}]", date);
         return TaxRatesResponse.builder()
-                .taxRate(new BigDecimal(21))
+                .taxRate(21)
                 .build();
     }
 }

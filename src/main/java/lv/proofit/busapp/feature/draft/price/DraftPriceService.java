@@ -8,7 +8,6 @@ import lv.proofit.busapp.api.draft.price.response.DraftPriceResponse;
 import lv.proofit.busapp.api.draft.price.response.PassengerPrice;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DraftPriceService {
 
-    private static final BigDecimal LUGGAGE_DISCOUNT_PERCENT = new BigDecimal(70);
+    private static final double LUGGAGE_DISCOUNT_PERCENT = 70;
 
     private final BasePriceService basePriceService;
     private final TaxRatesApiClient taxRatesApiClient;
@@ -37,17 +36,16 @@ public class DraftPriceService {
     }
 
     private List<PassengerPrice> getPassengerPrices(DraftPriceRequest request) {
-        BigDecimal basePrice = basePriceService.getBy(request.getDestinationTerminalName());
-        BigDecimal taxRatePercent = taxRatesApiClient.get(LocalDate.now()).getTaxRate();
-        Calculator calculator = new Calculator(basePrice);
+        double basePrice = basePriceService.getBy(request.getDestinationTerminalName());
+        double taxRatePercent = taxRatesApiClient.get(LocalDate.now()).getTaxRate();
         List<PassengerPrice> passengerPriceList = new ArrayList<>();
         for (Passenger passenger : request.getPassengers()) {
-            BigDecimal tickerPrice = calculator.computePrice(passenger.getAge().getDiscountPercent(), taxRatePercent);
-            BigDecimal luggagePrice = calculator.computePrice(LUGGAGE_DISCOUNT_PERCENT, taxRatePercent).multiply(new BigDecimal(passenger.getNumberOfBags()));
+            double tickerPrice = Calculator.computePrice(basePrice, passenger.getAge().getDiscountPercent(), taxRatePercent);
+            double luggagePrice = Calculator.computePrice(basePrice, LUGGAGE_DISCOUNT_PERCENT, taxRatePercent) * passenger.getNumberOfBags();
             PassengerPrice passengerPrice = PassengerPrice.builder()
                     .passenger(passenger)
-                    .ticketPrice(tickerPrice.doubleValue())
-                    .luggagePrice(luggagePrice.doubleValue())
+                    .ticketPrice(tickerPrice)
+                    .luggagePrice(luggagePrice)
                     .build();
             passengerPriceList.add(passengerPrice);
         }

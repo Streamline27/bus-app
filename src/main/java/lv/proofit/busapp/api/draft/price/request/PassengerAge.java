@@ -1,18 +1,15 @@
 package lv.proofit.busapp.api.draft.price.request;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
 
 @Getter
+@RequiredArgsConstructor
 public enum PassengerAge {
 
     ADULT(0),
     CHILD(50);
 
-    private final BigDecimal discountPercent;
-
-    PassengerAge(int discount) {
-        this.discountPercent = new BigDecimal(discount);
-    }
+    private final double discountPercent;
 }
