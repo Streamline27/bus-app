@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.proofit.busapp.feature.draft.price.PriceUtils.computePrice;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -40,8 +42,8 @@ public class DraftPriceService {
         double taxRatePercent = taxRatesApiClient.get(LocalDate.now()).getTaxRate();
         List<PassengerPrice> passengerPriceList = new ArrayList<>();
         for (Passenger passenger : request.getPassengers()) {
-            double tickerPrice = Calculator.computePrice(basePrice, passenger.getAge().getDiscountPercent(), taxRatePercent);
-            double luggagePrice = Calculator.computePrice(basePrice, LUGGAGE_DISCOUNT_PERCENT, taxRatePercent) * passenger.getNumberOfBags();
+            double tickerPrice = computePrice(basePrice, passenger.getAge().getDiscountPercent(), taxRatePercent);
+            double luggagePrice = computePrice(basePrice, LUGGAGE_DISCOUNT_PERCENT, taxRatePercent) * passenger.getNumberOfBags();
             PassengerPrice passengerPrice = PassengerPrice.builder()
                     .passenger(passenger)
                     .ticketPrice(tickerPrice)
