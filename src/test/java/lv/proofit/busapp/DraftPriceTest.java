@@ -209,40 +209,6 @@ public class DraftPriceTest extends IntegrationTest {
         );
     }
 
-    @Builder
-    public static class TwoPassengerArguments {
-        Passenger passenger1;
-        Passenger passenger2;
-        double basePrice;
-        double taxRate;
-        double tickerPrice1;
-        double luggagePrice1;
-        double tickerPrice2;
-        double luggagePrice2;
-        double totalPrice;
-
-        @Override
-        public String toString() {
-            return "passengerAge1:[" + passenger1.getAge() + "], passengerLuggage1:[" + passenger1.getNumberOfBags() + "] " +
-                    "passengerAge2:[" + passenger2.getAge() + "], passengerLuggage2:[" + passenger2.getNumberOfBags() + "] " +
-                    "taxRate:[" + taxRate + "], basePrice:[" + basePrice + "]";
-        }
-    }
-
-    @Builder
-    public static class SinglePassengerArguments {
-        Passenger passenger;
-        double basePrice;
-        double taxRate;
-        double tickerPrice;
-        double luggagePrice;
-        double totalPrice;
-
-        @Override
-        public String toString() {
-            return "passangeAge:[" + passenger.getAge() + "], passengerLuggage:["+ passenger.getNumberOfBags() +"], taxRate:[" + taxRate + "], basePrice:[" + basePrice + "]";
-        }
-    }
 
     private void assertPricesForPassengerAre(double priceForTicker, double priceForLuggage, String passengerName, DraftPriceResponse response) {
         assertEquals(priceForTicker, getPassengerPrice(passengerName, response.getPrices()).getTicketPrice());
@@ -266,7 +232,6 @@ public class DraftPriceTest extends IntegrationTest {
     private void assertPriceListSizeIs(int i, DraftPriceResponse draftPriceResponse) {
         assertEquals(i, draftPriceResponse.getPrices().size());
     }
-
 
     private static Passenger childPassenger(String name) {
         return childPassenger(name, 0);
@@ -318,5 +283,40 @@ public class DraftPriceTest extends IntegrationTest {
                                 "  \"taxRate\": "+ taxRate +"\n" +
                                 "}")
                 ));
+    }
+
+    @Builder
+    private static class TwoPassengerArguments {
+        Passenger passenger1;
+        Passenger passenger2;
+        double basePrice;
+        double taxRate;
+        double tickerPrice1;
+        double luggagePrice1;
+        double tickerPrice2;
+        double luggagePrice2;
+        double totalPrice;
+
+        @Override
+        public String toString() {
+            return "passengerAge1:[" + passenger1.getAge() + "], passengerLuggage1:[" + passenger1.getNumberOfBags() + "] " +
+                    "passengerAge2:[" + passenger2.getAge() + "], passengerLuggage2:[" + passenger2.getNumberOfBags() + "] " +
+                    "taxRate:[" + taxRate + "], basePrice:[" + basePrice + "]";
+        }
+    }
+
+    @Builder
+    private static class SinglePassengerArguments {
+        Passenger passenger;
+        double basePrice;
+        double taxRate;
+        double tickerPrice;
+        double luggagePrice;
+        double totalPrice;
+
+        @Override
+        public String toString() {
+            return "passangeAge:[" + passenger.getAge() + "], passengerLuggage:["+ passenger.getNumberOfBags() +"], taxRate:[" + taxRate + "], basePrice:[" + basePrice + "]";
+        }
     }
 }

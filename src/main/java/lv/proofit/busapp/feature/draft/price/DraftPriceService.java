@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.proofit.busapp.feature.draft.price.PriceUtils.computeLuggagePrice;
 import static lv.proofit.busapp.feature.draft.price.PriceUtils.computePrice;
 
 @Slf4j
@@ -19,31 +20,29 @@ import static lv.proofit.busapp.feature.draft.price.PriceUtils.computePrice;
 @RequiredArgsConstructor
 public class DraftPriceService {
 
-    private static final double LUGGAGE_DISCOUNT_PERCENT = 70;
-
     private final BasePriceService basePriceService;
-    private final TaxRatesApiClient taxRatesApiClient;
+    private final TaxRatesApiClinet taxRatesApiClinet;
 
     public DraftPriceResponse calculatePrices(DraftPriceRequest request) {
         log.info("Draft price: Computing price. destinationTerminalName:[{}], numPassengers:[{}]",
                 request.getDestinationTerminalName(),
                 request.getPassengers().size()
         );
-        List<PassengerPrice> passengerPriceList = getPassengerPrices(request);
+        List<PassengerPrice> priceList = getPassengerPrices(request);
         return DraftPriceResponse.builder()
                 .destinationTerminalName(request.getDestinationTerminalName())
-                .total(getTotal(passengerPriceList))
-                .prices(passengerPriceList)
+                .total(getTotalPrice(priceList))
+                .prices(priceList)
                 .build();
     }
 
     private List<PassengerPrice> getPassengerPrices(DraftPriceRequest request) {
         double basePrice = basePriceService.getBy(request.getDestinationTerminalName());
-        double taxRatePercent = taxRatesApiClient.get(LocalDate.now()).getTaxRate();
+        double taxRatePercent = taxRatesApiClinet.getTaxRate(LocalDate.now()).getTaxRate();
         List<PassengerPrice> passengerPriceList = new ArrayList<>();
         for (Passenger passenger : request.getPassengers()) {
-            double tickerPrice = computePrice(basePrice, passenger.getAge().getDiscountPercent(), taxRatePercent);
-            double luggagePrice = computePrice(basePrice, LUGGAGE_DISCOUNT_PERCENT, taxRatePercent) * passenger.getNumberOfBags();
+            double tickerPrice = computePrice(basePrice, passenger.getDiscountPercent(), taxRatePercent);
+            double luggagePrice = computeLuggagePrice(basePrice, taxRatePercent, passenger.getNumberOfBags());
             PassengerPrice passengerPrice = PassengerPrice.builder()
                     .passenger(passenger)
                     .ticketPrice(tickerPrice)
@@ -54,7 +53,7 @@ public class DraftPriceService {
         return passengerPriceList;
     }
 
-    private Double getTotal(List<PassengerPrice> prices) {
+    private Double getTotalPrice(List<PassengerPrice> prices) {
         return prices.stream()
                 .map(PassengerPrice::getTotalPrice)
                 .reduce(0D, Double::sum);

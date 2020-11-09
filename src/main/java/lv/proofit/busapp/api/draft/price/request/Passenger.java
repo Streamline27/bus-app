@@ -21,4 +21,8 @@ public class Passenger {
 
     @NotNull
     PassengerAge age;
+
+    public double getDiscountPercent() {
+        return this.age.getDiscountPercent();
+    }
 }

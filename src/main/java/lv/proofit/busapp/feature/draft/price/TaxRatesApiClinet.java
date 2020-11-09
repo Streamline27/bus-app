@@ -15,13 +15,13 @@ import java.time.LocalDate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TaxRatesApiClient {
+public class TaxRatesApiClinet {
 
     private final BusAppProperties properties;
 
     private final RestTemplate restTemplate;
 
-    public TaxRatesResponse get(LocalDate date) {
+    public TaxRatesResponse getTaxRate(LocalDate date) {
         ResponseEntity<TaxRatesResponse> response = restTemplate.getForEntity(getUrl(date), TaxRatesResponse.class);
         HttpStatus code = response.getStatusCode();
         if (code != HttpStatus.OK) {

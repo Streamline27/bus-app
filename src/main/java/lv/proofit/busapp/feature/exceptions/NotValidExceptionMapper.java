@@ -5,7 +5,6 @@ import lv.proofit.busapp.api.exceptions.ExceptionResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,12 +13,6 @@ import java.util.stream.Collectors;
 public class NotValidExceptionMapper {
 
     public static final String VALIDATION_EXCEPTION_MESSAGE = "Request validation failed!";
-
-    public ExceptionResponse map(MethodArgumentTypeMismatchException ex) {
-        return ExceptionResponse.builder()
-                .message("Failed to convert:["+ ex.getValue() +"]. Parameter name:["+ ex.getName() +"]")
-                .build();
-    }
 
     public ExceptionResponse map(MethodArgumentNotValidException ex) {
         return ExceptionResponse.builder()
