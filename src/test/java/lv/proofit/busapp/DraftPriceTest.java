@@ -33,8 +33,8 @@ public class DraftPriceTest extends IntegrationTest {
     @Autowired
     private TestApiClient client;
 
-    public static final String PASSENGER_NAME_1 = "Vladislav";
-    public static final String PASSENGER_NAME_2 = "Egor";
+    private static final String PASSENGER_NAME_1 = "Vladislav";
+    private static final String PASSENGER_NAME_2 = "Egor";
     private static final String EXPECTED_DESTINATION_TERMINAL = "Some station, Somewhere else";
 
     @ParameterizedTest
