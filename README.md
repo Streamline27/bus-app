@@ -13,4 +13,4 @@
 * Try running tests.
   * WIremock is used to showcase how 3rd party JSON service can be mocked.
   * Docker PostgreSQL test container is used to run database for integration tests. No additional setup for H2 is required.
-  * The idea is to entirely test app with integration tests. This allows low risk of false positive tests and eliminates fear of refactoring.
+  * The idea was to test application with integration tests only.
