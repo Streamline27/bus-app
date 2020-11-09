@@ -1,7 +1,9 @@
 package lv.proofit.busapp.utils;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import lombok.experimental.Delegate;
 import org.junit.Rule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -19,7 +21,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 @ContextConfiguration(initializers = IntegrationTest.Initializer.class)
 public class IntegrationTest {
 
-    public static WireMockRule wireMockRule = new WireMockRule(options().port(8089).bindAddress("localhost"));
+    @Autowired
+    protected WireMockService wireMockService;
 
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:11.1")
             .withDatabaseName("integration-tests-db")
@@ -28,7 +31,6 @@ public class IntegrationTest {
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            wireMockRule.start();
             postgreSQLContainer.start();
             TestPropertyValues.of(
                     "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),

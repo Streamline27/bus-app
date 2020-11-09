@@ -1,6 +1,9 @@
 package lv.proofit.busapp;
 
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import lombok.Builder;
 import lv.proofit.busapp.api.draft.price.request.DraftPriceRequest;
@@ -20,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.matching;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DraftPriceTest extends IntegrationTest {
@@ -274,15 +276,7 @@ public class DraftPriceTest extends IntegrationTest {
     }
 
     public void taxRateServiceReturnsTaxRateEqualTo(double taxRate) {
-        wireMockRule.stubFor(WireMock.get(WireMock.urlPathEqualTo("/tax-rates"))
-                .withQueryParam("date", matching(".*"))
-                .willReturn(WireMock.aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(
-                                "{\n" +
-                                "  \"taxRate\": "+ taxRate +"\n" +
-                                "}")
-                ));
+        wireMockService.taxRateServiceReturnsTaxRateEqualTo(taxRate);
     }
 
     @Builder

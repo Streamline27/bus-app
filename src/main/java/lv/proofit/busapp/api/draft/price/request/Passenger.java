@@ -1,5 +1,6 @@
 package lv.proofit.busapp.api.draft.price.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Value;
@@ -22,6 +23,7 @@ public class Passenger {
     @NotNull
     PassengerAge age;
 
+    @JsonIgnore
     public double getDiscountPercent() {
         return this.age.getDiscountPercent();
     }
