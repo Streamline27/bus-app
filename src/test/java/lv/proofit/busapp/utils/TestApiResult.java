@@ -10,13 +10,8 @@ public class TestApiResult<T> {
     T body;
     int status;
 
-    public TestApiResult(T body, int status) {
-        this.body = body;
-        this.status = status;
-    }
-
     public TestApiResult<T> assertStatusIs(int expectedStatus) {
-        Assertions.assertEquals(status, this.status);
+        Assertions.assertEquals(expectedStatus, this.status);
         return this;
     }
 }
